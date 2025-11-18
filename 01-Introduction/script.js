@@ -25,7 +25,7 @@ console.log(arrSquaresWithMap);
 
 // Chercher l'avant dernière occurence d'un caractère dans une chaine de caractères
 const strInputString 		= "Bonjour"
-const chrCharacter 			= 'o';
+const chrCharacter 			= 'u';
 
 // Récupère l'index de la première occurence
 let firstIndex 	= strInputString.indexOf(chrCharacter);
@@ -34,18 +34,33 @@ let firstIndex 	= strInputString.indexOf(chrCharacter);
 let secondIndex = strInputString.indexOf(chrCharacter, firstIndex + 1);
 
 // Récupère l'index de la dernière occurence
-let lastIndex	= strInputString.indexOf(chrCharacter);
+let lastIndex	= strInputString.lastIndexOf(chrCharacter);
 
+// On cherche à partir de la fin, avant la dernière occurence, l'occurence précédente
+let penultimateIndex = strInputString.lastIndexOf(chrCharacter, lastIndex - 1);
 
-let arrIndexes = [];
 
 // Boucle FOR sans aucune méthode des Arrays
+
+let arrIndexes = []; //< Tableau qui va stocker tous les index de mon caractère dans la chaine
+
 for(let i = 0; i < strInputString.length; i++) {
-	console.log(strInputString[i]);
 	
-	if(strInputString[i] === chrCharacter) {
+	if(strInputString[i] == chrCharacter) {
 		arrIndexes.push(i);
 	}
 }
 
-console.log(arrIndexes[arrIndexes.length - 1]);
+if(arrIndexes.length > 0) {
+	
+	if(arrIndexes.length >= 2) {
+		
+		console.log(`Avant dernière occurence: ${arrIndexes[arrIndexes.length - 2]}`);
+	}
+	else {
+		console.log(`Avant dernière occurence: ${arrIndexes[0]}`);
+	}
+}
+else {
+	console.log('Aucune occurence trouvée');
+}
