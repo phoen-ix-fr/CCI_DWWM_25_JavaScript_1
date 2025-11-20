@@ -1,9 +1,17 @@
-#grid-layer {
+#grid-game {
 	position: relative;
-
-	width: 334px; /* 8x40px de tile_size + 7x2px de gap */
-	height: 334px; /* 8x40px de tile_size + 7x2px de gap */
 	margin: auto;
+	width: 334px; 	/* 8x40px de tile_size + 7x2px de gap */
+	height: 334px; 	/* 8x40px de tile_size + 7x2px de gap */
+}
+
+#grid-layer, #token-layer {	
+	position: absolute;
+	width: 100%;
+	height: 100%;
+}
+
+#grid-layer {
 
 	display: grid; 
 	grid-template-columns: repeat(8, 40px);
@@ -12,10 +20,18 @@
 	gap: 2px; 
 }
 
-.cell
-{
-    position: relative;
+.cell, .player {
     width: 40px;
-    height: 40px;
+    height: 40px;	
+}
+
+.cell {
+    position: relative;
+    border-radius: 5px;
 	border: 1px solid black;
+}
+
+.player {
+	position: absolute;
+	background-size: cover;
 }
