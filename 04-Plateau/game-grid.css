@@ -1,0 +1,21 @@
+#grid-layer {
+	position: relative;
+
+	width: 334px; /* 8x40px de tile_size + 7x2px de gap */
+	height: 334px; /* 8x40px de tile_size + 7x2px de gap */
+	margin: auto;
+
+	display: grid; 
+	grid-template-columns: repeat(8, 40px);
+	grid-template-rows: repeat(8, 40px);
+	
+	gap: 2px; 
+}
+
+.cell
+{
+    position: relative;
+    width: 40px;
+    height: 40px;
+	border: 1px solid black;
+}
