@@ -11,3 +11,8 @@
 	width: 50px;
 	background-color: blue;
 }
+
+#danger-zone {
+	border: 1px red solid;
+	position: absolute;
+}
