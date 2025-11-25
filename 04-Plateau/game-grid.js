@@ -53,7 +53,7 @@ function getRandomAvailablePosition() {
 		return; // Sort de la fonction et renvoi "rien" (NULL)
 	}
 	
-	let pos;
+	let pos; //< Position qui sera générée aléatoirement
 	
 	do {
 		
@@ -63,11 +63,19 @@ function getRandomAvailablePosition() {
 			y: getRandomIntBetween(0, GRID_SIZE_HEIGHT)
 		};
 	
-	} while(!isCellAvailable(pos.x, pos.y));
+	} while(!isCellAvailable(pos.x, pos.y)); // Si la cellule est disponible OK, sinon on boucle
 	
 	return pos;
 }
 
+/**
+	Vérifie si les coordonnées sont disponibles
+	
+	@param Number x Coordonées en abs à tester
+	@param Number y Coordonées en ord à tester
+	
+	@return Boolean Si la cellule est disponible ou non
+*/
 function isCellAvailable(x, y) {
 	
 	// Vérifie si l'une des coordonées des ennemis est la coordonée à tester
@@ -78,7 +86,7 @@ function isCellAvailable(x, y) {
 	// Vérifie si la coordonée du joueur est la coordonnée à tester
 	const blCellIsPlayer = posPlayer.x === x && posPlayer.y === y;
 	
-	// Si la coordonnée à tester est la case du joueur OU un ennemi
+	// Si la coordonnée à tester n'est pas la case du joueur OU un ennemi
 	return !(blCellIsPlayer || blCellIsEnemy);
 }
 
