@@ -136,6 +136,27 @@ function removeDice() {
 	intDicesNumber--;
 }
 
+function rollDices() {
+	
+	let intRollValue = 0;
+	
+	const arrElDicesImg = document.querySelectorAll('.dice img');
+	
+	for(let i = 0; i < intDicesNumber; i++) {
+		
+		// 6+1 car getRandomIntBetween ne va jamais à la borne maximale
+		const diceValue = getRandomIntBetween(1, 7);
+		
+		intRollValue += diceValue;
+		
+		console.log(`Valeur du dé: ${diceValue}`);
+		
+		arrElDicesImg[i].src = `assets/dice${diceValue}.png`;
+	}
+	
+	return intRollValue;
+}
+
 
 // Création des cases du plateau de jeu
 for (let y = 0; y < GRID_SIZE_HEIGHT; y++) {
@@ -242,17 +263,28 @@ document.getElementById('remove-dices').addEventListener('click', () => {
 	}
 });
 
+
+let intDicesResult = 0;
+
 document.getElementById('roll-dices').addEventListener('click', () => {
 	
 	console.log(`Lancer des dés : ${intDicesNumber} dé(s) lancé(s)`);
 	
-	const arrElDicesImg = document.querySelectorAll('.dice img');
+	let intRollingTimes = 0;
 	
-	for(let i = 0; i < intDicesNumber; i++) {
+	const intRollingInterval = setInterval(() => {
 		
-		const diceValue = getRandomIntBetween(1, 7); //< 6+1 car getRandomIntBetween ne va jamais à la borne maximale
-		console.log(`Valeur du dé: ${diceValue}`);
+		rollDices();
 		
-		arrElDicesImg[i].src = `assets/dice${diceValue}.png`;
-	}
+		if(intRollingTimes++ >= 15) {
+			clearInterval(intRollingInterval);
+			
+			intDicesResult = rollDices();
+			
+			console.log(`Résultat du lancé: ${intDicesResult}`);
+		}
+		
+	}, 100);
+	
 });
+
