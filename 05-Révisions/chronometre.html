@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chronomètre</title>
+	<link href="chronometre.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h1>Chronomètre</h1>
+        
+        <div class="display">
+            <div class="time-unit">
+                <div class="time-value" id="hours">00</div>
+                <div class="time-label">Heures</div>
+            </div>
+            <div class="time-unit">
+                <div class="time-value" id="minutes">00</div>
+                <div class="time-label">Minutes</div>
+            </div>
+            <div class="time-unit">
+                <div class="time-value" id="seconds">00</div>
+                <div class="time-label">Secondes</div>
+            </div>
+        </div>
+
+        <div class="buttons">
+            <button id="startBtn">Start</button>
+            <button id="stopBtn" disabled>Stop</button>
+            <button id="resumeBtn" disabled>Reprendre</button>
+            <button id="resetBtn">Reset</button>
+        </div>
+    </div>
+
+    <script src="chronometre.js"></script>
+</body>
+</html>
