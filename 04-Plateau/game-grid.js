@@ -79,15 +79,30 @@ function getRandomAvailablePosition() {
 function isCellAvailable(x, y) {
 	
 	// Vérifie si l'une des coordonées des ennemis est la coordonée à tester
-	const blCellIsEnemy = arrPosEnemies.some(pos => {
-		return pos.x === x && pos.y === y;
-	});
+	const blCellIsEnemy = isCellEnemy(x, y);
 	
 	// Vérifie si la coordonée du joueur est la coordonnée à tester
 	const blCellIsPlayer = posPlayer.x === x && posPlayer.y === y;
 	
 	// Si la coordonnée à tester n'est pas la case du joueur OU un ennemi
 	return !(blCellIsPlayer || blCellIsEnemy);
+}
+
+/**
+	Vérifie les coordonnées correspondent à un ennemi sur le plateau
+	
+	@param Number x Coordonées en abs à tester
+	@param Number y Coordonées en ord à tester
+	
+	@return Boolean Si la cellule est un ennemi
+*/
+function isCellEnemy(x, y) {
+	
+	const blCellIsEnemy = arrPosEnemies.some(pos => {
+		return pos.x === x && pos.y === y;
+	});
+	
+	return blCellIsEnemy;
 }
 
 // Création des cases du plateau de jeu
@@ -132,30 +147,46 @@ console.log(arrPosEnemies, posPlayer);
 // Gestion du mouvement du joueur
 document.addEventListener('keydown', (e) => {
 	
+	// Créer une position provisoire pour les calculs
+	let posPlayerNext = { x: posPlayer.x, y: posPlayer.y };
+	
 	// Logique pure de calcul du mouvement
 	switch(e.key) {
 		case 'ArrowUp':
-			if(posPlayer.y > 0) posPlayer.y--;			
+			if(posPlayerNext.y > 0) posPlayerNext.y--;			
 			break;
 			
 		case 'ArrowDown':
-			if(posPlayer.y < GRID_SIZE_HEIGHT - 1) posPlayer.y++;	
+			if(posPlayerNext.y < GRID_SIZE_HEIGHT - 1) posPlayerNext.y++;	
 			break;
 			
 		case 'ArrowLeft':
-			if(posPlayer.x > 0) posPlayer.x--;	
+			if(posPlayerNext.x > 0) posPlayerNext.x--;	
 			break;
 			
 		case 'ArrowRight':
-			if(posPlayer.x < GRID_SIZE_WIDTH - 1) posPlayer.x++;
+			if(posPlayerNext.x < GRID_SIZE_WIDTH - 1) posPlayerNext.x++;
 			break;
 	}
 	
-	// Rendu graphique
-	const intRealX = posPlayer.x * (TILE_SIZE + 2);
-	const intRealY = posPlayer.y * (TILE_SIZE + 2);
+	// Si la prochaine position est un ennemi, alors combat
+	if(isCellEnemy(posPlayerNext.x, posPlayerNext.y)) {
+		
+		elPlayer.classList.add('in-battle');
+	}
+	else {
+		
+		elPlayer.classList.remove('in-battle');
+		
+		// Sinon, on dit que la position du joueur est sa position suivante
+		posPlayer.x = posPlayerNext.x;
+		posPlayer.y = posPlayerNext.y;
 	
-	elPlayer.style.left = `${intRealX}px`;
-	elPlayer.style.top 	= `${intRealY}px`;
-	
+		// Rendu graphique
+		const intRealX = posPlayer.x * (TILE_SIZE + 2);
+		const intRealY = posPlayer.y * (TILE_SIZE + 2);
+		
+		elPlayer.style.left = `${intRealX}px`;
+		elPlayer.style.top 	= `${intRealY}px`;
+	}
 });

@@ -34,4 +34,14 @@
 .player, .enemy {
 	position: absolute;
 	background-size: cover;
+	border-radius: 5px;
+	margin: 1px;
+}
+
+.player {
+	background-color: white;
+}
+
+.player.in-battle {
+	background-color: rgba(255, 99, 71, 0.4);
 }
