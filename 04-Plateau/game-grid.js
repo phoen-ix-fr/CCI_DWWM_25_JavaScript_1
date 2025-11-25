@@ -7,9 +7,17 @@ const PLAYER_CLASS 		= "archer";
 const ENEMIES_NUMBER	= 4;			//< Nombre d'ennemis à créer sur mon plateau
 const ENEMIES_CLASS		= "skeleton";
 
+const DICES_MIN_NBR		= 1;
+const DICES_MAX_NBR		= 5;
+
+let intDicesNumber		= 0;
+
 // Layers du plateau de jeu - grid + jetons
 const elGridContainer 	= document.getElementById('grid-layer');
 const elTokenLayer 		= document.getElementById('token-layer');
+
+// Div qui contient les images des dés
+const elDicesContainer	= document.getElementById('dices');
 
 // Element DIV du joueur
 const elPlayer 			= document.createElement('div');
@@ -105,6 +113,30 @@ function isCellEnemy(x, y) {
 	return blCellIsEnemy;
 }
 
+function addDice() {
+	
+	// Création d'un nouvel élément DIV pour le dé
+	const elNewDice = document.createElement('div');
+	elNewDice.classList.add('dice');
+	elNewDice.innerHTML = '<img src="assets/dice1.png">';
+	
+	// Ajout de la DIV à la div qui contient tous les dés
+	elDicesContainer.append(elNewDice);
+	
+	intDicesNumber++;
+}
+
+function removeDice() {
+	
+	// Suppression d'un dé
+	const elDiceToDelete = document.querySelector('.dice');
+	
+	elDiceToDelete.remove();
+	
+	intDicesNumber--;
+}
+
+
 // Création des cases du plateau de jeu
 for (let y = 0; y < GRID_SIZE_HEIGHT; y++) {
     for (let x = 0; x < GRID_SIZE_WIDTH; x++) {
@@ -142,7 +174,8 @@ for(let i = 0; i < ENEMIES_NUMBER; i++) {
 	arrPosEnemies.push(posEnemy); //< On garde en mémoire les coordonées de l'ennemi
 }
 
-console.log(arrPosEnemies, posPlayer);
+// Par défaut, on ajoute un dé
+addDice();
 
 // Gestion du mouvement du joueur
 document.addEventListener('keydown', (e) => {
@@ -188,5 +221,23 @@ document.addEventListener('keydown', (e) => {
 		
 		elPlayer.style.left = `${intRealX}px`;
 		elPlayer.style.top 	= `${intRealY}px`;
+	}
+});
+
+// Ecoute de l'ajout d'un dé
+document.getElementById('add-dices').addEventListener('click', () => {
+	
+	if(intDicesNumber < DICES_MAX_NBR) {
+		
+		addDice();
+	}
+});
+
+// Ecoute de la suppression d'un dé
+document.getElementById('remove-dices').addEventListener('click', () => {
+	
+	if(intDicesNumber > DICES_MIN_NBR) {
+		
+		removeDice();
 	}
 });
