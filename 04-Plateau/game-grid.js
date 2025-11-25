@@ -241,3 +241,18 @@ document.getElementById('remove-dices').addEventListener('click', () => {
 		removeDice();
 	}
 });
+
+document.getElementById('roll-dices').addEventListener('click', () => {
+	
+	console.log(`Lancer des dés : ${intDicesNumber} dé(s) lancé(s)`);
+	
+	const arrElDicesImg = document.querySelectorAll('.dice img');
+	
+	for(let i = 0; i < intDicesNumber; i++) {
+		
+		const diceValue = getRandomIntBetween(1, 7); //< 6+1 car getRandomIntBetween ne va jamais à la borne maximale
+		console.log(`Valeur du dé: ${diceValue}`);
+		
+		arrElDicesImg[i].src = `assets/dice${diceValue}.png`;
+	}
+});
