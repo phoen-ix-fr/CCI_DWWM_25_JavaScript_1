@@ -4,7 +4,7 @@ const TILE_SIZE 		= 40;
 
 const PLAYER_CLASS 		= "archer";
 
-const ENEMIES_NUMBER	= 2;			//< Nombre d'ennemis à créer sur mon plateau
+const ENEMIES_NUMBER	= 4;			//< Nombre d'ennemis à créer sur mon plateau
 const ENEMIES_CLASS		= "skeleton";
 
 // Layers du plateau de jeu - grid + jetons
@@ -49,25 +49,27 @@ elPlayer.classList.add('player');
 elPlayer.style.backgroundImage = `url("assets/player_${PLAYER_CLASS}.png")`;
 elTokenLayer.append(elPlayer);
 
-
 // Création des ennemis
-const elEnemyDiv = document.createElement('div');
-elEnemyDiv.classList.add('enemy');
-elEnemyDiv.style.backgroundImage = `url("assets/enemy_${ENEMIES_CLASS}.png")`;
-elTokenLayer.append(elEnemyDiv);
+for(let i = 0; i < ENEMIES_NUMBER; i++) {
 
-const posEnemy = {
-	x: getRandomIntBetween(0, GRID_SIZE_WIDTH - 1),
-	y: getRandomIntBetween(0, GRID_SIZE_HEIGHT - 1)
-};
+	// Création d'un ennemi
+	const elEnemyDiv = document.createElement('div');
+	elEnemyDiv.classList.add('enemy');
+	elEnemyDiv.style.backgroundImage = `url("assets/enemy_${ENEMIES_CLASS}.png")`;
+	elTokenLayer.append(elEnemyDiv);
 
-// Rendu graphique de l'ennemi
-const intRealEnemyX = posEnemy.x * (TILE_SIZE + 2);
-const intRealEnemyY = posEnemy.y * (TILE_SIZE + 2);
+	const posEnemy = {
+		x: getRandomIntBetween(0, GRID_SIZE_WIDTH - 1),
+		y: getRandomIntBetween(0, GRID_SIZE_HEIGHT - 1)
+	};
 
-elEnemyDiv.style.left = `${intRealEnemyX}px`;
-elEnemyDiv.style.top  = `${intRealEnemyY}px`;
+	// Rendu graphique de l'ennemi
+	const intRealEnemyX = posEnemy.x * (TILE_SIZE + 2);
+	const intRealEnemyY = posEnemy.y * (TILE_SIZE + 2);
 
+	elEnemyDiv.style.left = `${intRealEnemyX}px`;
+	elEnemyDiv.style.top  = `${intRealEnemyY}px`;
+}
 
 // Gestion du mouvement du joueur
 document.addEventListener('keydown', (e) => {
