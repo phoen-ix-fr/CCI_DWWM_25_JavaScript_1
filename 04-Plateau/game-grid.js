@@ -1,6 +1,6 @@
-const GRID_SIZE_WIDTH 	= 8;
-const GRID_SIZE_HEIGHT 	= 8;
-const TILE_SIZE 		= 40;
+const GRID_SIZE_WIDTH 	= 8;	// Nombre de cellules en largeur
+const GRID_SIZE_HEIGHT 	= 8;	// Nombre de cellules en hauteur
+const TILE_SIZE 		= 40;	// Taille d'une cellule en pixels
 
 const PLAYER_CLASS 		= "archer";
 
@@ -33,6 +33,55 @@ function getRandomIntBetween(min, max) {
 	return Math.floor(Math.random() * (max - min)) + min;
 }
 
+/**
+	Retourne un objet { x, y } correspondant à des coordonnées disponibles
+	sur le plateau de jeu.
+	On vérifiera cette disponibilité à l'aide des variables correspondantes
+	aux positions des ennemis et du joueur
+	
+	@return {x, y} Position (coordonnées) disponible sur le plateau
+*/
+function getRandomAvailablePosition() {
+	
+	// Nombre de cases déjà utilisées : nbre d'ennemis + 1 joueur
+	const intTokenNbr = arrPosEnemies.length + 1;
+	
+	// Nombre total de cases du plateau
+	const intTokenMax = GRID_SIZE_WIDTH * GRID_SIZE_HEIGHT;
+	
+	if(intTokenNbr >= intTokenMax) {
+		return; // Sort de la fonction et renvoi "rien" (NULL)
+	}
+	
+	let pos;
+	
+	do {
+		
+		// Génération de nouvelles coordonées aléatoires
+		pos = {
+			x: getRandomIntBetween(0, GRID_SIZE_WIDTH),
+			y: getRandomIntBetween(0, GRID_SIZE_HEIGHT)
+		};
+	
+	} while(!isCellAvailable(pos.x, pos.y));
+	
+	return pos;
+}
+
+function isCellAvailable(x, y) {
+	
+	// Vérifie si l'une des coordonées des ennemis est la coordonée à tester
+	const blCellIsEnemy = arrPosEnemies.some(pos => {
+		return pos.x === x && pos.y === y;
+	});
+	
+	// Vérifie si la coordonée du joueur est la coordonnée à tester
+	const blCellIsPlayer = posPlayer.x === x && posPlayer.y === y;
+	
+	// Si la coordonnée à tester est la case du joueur OU un ennemi
+	return !(blCellIsPlayer || blCellIsEnemy);
+}
+
 // Création des cases du plateau de jeu
 for (let y = 0; y < GRID_SIZE_HEIGHT; y++) {
     for (let x = 0; x < GRID_SIZE_WIDTH; x++) {
@@ -58,10 +107,7 @@ for(let i = 0; i < ENEMIES_NUMBER; i++) {
 	elEnemyDiv.style.backgroundImage = `url("assets/enemy_${ENEMIES_CLASS}.png")`;
 	elTokenLayer.append(elEnemyDiv);
 
-	const posEnemy = {
-		x: getRandomIntBetween(0, GRID_SIZE_WIDTH - 1),
-		y: getRandomIntBetween(0, GRID_SIZE_HEIGHT - 1)
-	};
+	const posEnemy = getRandomAvailablePosition();
 
 	// Rendu graphique de l'ennemi
 	const intRealEnemyX = posEnemy.x * (TILE_SIZE + 2);
@@ -69,7 +115,11 @@ for(let i = 0; i < ENEMIES_NUMBER; i++) {
 
 	elEnemyDiv.style.left = `${intRealEnemyX}px`;
 	elEnemyDiv.style.top  = `${intRealEnemyY}px`;
+	
+	arrPosEnemies.push(posEnemy); //< On garde en mémoire les coordonées de l'ennemi
 }
+
+console.log(arrPosEnemies, posPlayer);
 
 // Gestion du mouvement du joueur
 document.addEventListener('keydown', (e) => {
