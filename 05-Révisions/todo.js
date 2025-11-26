@@ -8,6 +8,8 @@ const elTaskInput 	= document.getElementById('taskInput');
 // Pour l'ajout, on créer un nouvel élément dans le DOM qu'on ajoute à la liste
 document.getElementById('addBtn').addEventListener('click', () => {
 	
+	const strTaskText = elTaskInput.value; //< Récupération du texte de l'input
+	console.log(strTaskText);
 });
 
 // Pour la suppression on supprimer tous les éléments du DOM dans la liste
