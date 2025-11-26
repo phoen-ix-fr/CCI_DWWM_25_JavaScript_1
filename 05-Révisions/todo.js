@@ -14,10 +14,25 @@ document.getElementById('addBtn').addEventListener('click', () => {
 	
 	// Création d'un nouvel élément <li> dans ma liste
 	const elTaskItem = document.createElement('li');
+	/*
 	elTaskItem.textContent = strTaskText; 	//< Affecte un contenu textuel simple
 											//< <li>Le texte de l'input</li>
+	*/
 	
-	elTaskItem.classList.add('task-item');	//< Rajoute la classe CSS au li
+	elTaskItem.classList.add('task-item');	//< Rajoute la classe CSS au li	
+	
+	// <li><span class="task-text">....</span>...</li>
+	const elTaskSpan = document.createElement('span');
+	elTaskSpan.textContent = strTaskText;
+	elTaskSpan.classList.add('task-text');
+	
+	elTaskItem.append(elTaskSpan);
+											
+	const elTaskButton = document.createElement('button');
+	elTaskButton.textContent = "Supprimer";
+	elTaskButton.classList.add('delete-btn');
+	
+	elTaskItem.append(elTaskButton); //< Ajoute le bouton au <li>
 	
 	// Ajouter le <li> au <ul> : elTaskList
 	elTaskList.append(elTaskItem);
